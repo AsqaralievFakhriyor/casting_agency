@@ -44,7 +44,7 @@ def create_app(test_config=None):
 	def after_request(response):
 
 		response.headers.add('Access-Conrool-Allow-Headers', 'Content-Type, Authorization, true')
-		response.headers.add('Access-Conrool-Allow-Methods', 'GET, POST, PUT, PATCH, OPTION')\
+		response.headers.add('Access-Conrool-Allow-Methods', 'GET, POST, PUT, PATCH, OPTION')
 
 		return response
 
