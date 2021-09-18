@@ -6,5 +6,6 @@ from database models import db, Actors, Movies
 @click.command(name='create_tables')
 @with_appcontext
 def create_tables():
+	db.drop_all()
 	db.create_all()
 # actually this didnt worked on heroku but i will try it soon :)
