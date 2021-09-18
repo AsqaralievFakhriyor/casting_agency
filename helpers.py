@@ -3,9 +3,9 @@ from database.models import Actors, Movies, db
 # i love this helpers xD
 def insert_data():
 
-	db.session.commit()
-	db.drop_all()
-	db.create_all()
+	# db.session.commit()
+	# db.drop_all()
+	# db.create_all()
 	# actors
 	actor1 = Actors(
 	name='Sarah Cameron'
