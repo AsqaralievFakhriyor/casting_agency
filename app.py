@@ -37,7 +37,7 @@ def create_app(test_config=None):
 
 	setup_db(app)
 	CORS(app)
-	# drop_data_create_again()
+	drop_data_create_again()
 	insert_data()
 
 	@app.after_request
@@ -65,7 +65,9 @@ def create_app(test_config=None):
 	#---------------------------------------------------------#
 	@app.route('/')
 	def index():
-		return redirect(url_for('movies'))
+		return jsonify({
+			"Ok page is working!"
+			})
 
 	# GET endpoint for actors
 	@app.route('/actors', methods = ['GET'])
