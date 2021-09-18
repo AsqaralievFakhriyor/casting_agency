@@ -1,6 +1,6 @@
 from database.models import Actors, Movies, drop_data_create_again
 
-
+# i love this helpers xD
 def insert_data():
 
 	# actors

@@ -7,3 +7,4 @@ from database models import db, Actors, Movies
 @with_appcontext
 def create_tables():
 	db.create_all()
+# actually this didnt worked on heroku but i will try it soon :)

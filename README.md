@@ -8,6 +8,7 @@
 ## Models:
 1. Movies with attributes title and release data.
 2. Actors with attributes name, age and gender
+#### I dont have relationship databases, i can make them but i dont have time, i must do my 4th project untill 20.09.2021 please dont ask me to do them 😥
 
 ## Endpoinds:🍔
 1. GET /actors and /movies
