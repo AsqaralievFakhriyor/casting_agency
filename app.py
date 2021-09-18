@@ -9,7 +9,7 @@ from flask import (
 from flask import request
 import json
 from flask_cors import CORS
-from database.models import setup_db, Actors, Movies, drop_data_create_again
+from database.models import setup_db, Actors, Movies
 from auth.auth import AuthError, requires_auth
 from helpers import insert_data
 
