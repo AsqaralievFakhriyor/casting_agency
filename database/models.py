@@ -2,21 +2,22 @@ import os
 from sqlalchemy import Column, Integer, String, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
+import config
 
 
 #geting database url
-# DB_PATH = os.getenv('DATABASE_URL')
+DB_PATH = os.getenv('DATABASE_URL')
 
 
 db = SQLAlchemy()
 
 # setup function 
 def setup_db(app):
-	# app.config["SQLALCHEMY_DATABASE_URI"] = database_path
-	# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = flask_sqlalchemy 
+	app.config["SQLALCHEMY_DATABASE_URI"] = DB_PATH
+	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = flask_sqlalchemy 
 	db.app = app
 	# grabing configurations from config.py
-	app.config.from_object('config')
+	# app.config.from_object('config')
 	db.init_app(app)
 	db.create_all()
 
