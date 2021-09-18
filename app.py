@@ -37,7 +37,6 @@ def create_app(test_config=None):
 
 	setup_db(app)
 	CORS(app)
-	drop_data_create_again()
 	insert_data()
 
 	@app.after_request

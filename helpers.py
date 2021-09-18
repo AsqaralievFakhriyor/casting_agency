@@ -1,8 +1,10 @@
-from database.models import Actors, Movies, drop_data_create_again
+from database.models import Actors, Movies, db
 
 # i love this helpers xD
 def insert_data():
 
+	db.drop_all()
+	db.create_all()
 	# actors
 	actor1 = Actors(
 	name='Sarah Cameron'

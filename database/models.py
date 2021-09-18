@@ -17,10 +17,7 @@ def setup_db(app):
 	# app.config.from_object('config')
 	db.init_app(app)
 	db.create_all()
-
-def drop_data_create_again():
-	db.drop_all()
-	db.create_all()
+	
 # actors 
 class Actors(db.Model):
 
