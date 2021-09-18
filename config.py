@@ -12,7 +12,7 @@ DEBUG = True
 # TRACK modificitaion
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 # TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI ='postgresql://postgres:0909@localhost:5432/capstone'
+SQLALCHEMY_DATABASE_URI ='postgres://ohimydbamxhozq:4874b53b0e2a0403128a5f871f3007ea9e90c04c5f0c7590b24ae6b60ef1cfb1@ec2-63-32-7-190.eu-west-1.compute.amazonaws.com:5432/d59sliljil0g1o'
 
 # atth configurations
 AUTH0_LINK = os.getenv('AUTH0_LINK','https://fax.us.auth0.com/authorize?audience=agency&response_type=token&client_id=l4ZqjZ7B3vtqJkrA3fU5wbw3cKXgyJ8k&redirect_uri=http://127.0.0.1:5000/log-result')
