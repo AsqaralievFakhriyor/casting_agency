@@ -36,13 +36,7 @@ class superClass(db.Model):
         db.session.commit()
 
 # actors 
-@dataclass
 class Actors(superClass):
-	id: int
-	name: String
-	age: int
-	gender: String
-
 	__tablename__ = 'actors'
 
 	id = Column(Integer, primary_key = True)
@@ -65,11 +59,7 @@ class Actors(superClass):
 			}
 
 # movies
-@dataclass
 class Movies(superClass):
-	id: int
-	title: String
-	release_data: String
 
 	__tablename__ = 'movies'
 
@@ -80,7 +70,6 @@ class Movies(superClass):
 	def __init__( self, title, release_data):
 		self.title = title 
 		self.release_data = release_data
-
 
 	def format(self):
 		return {
