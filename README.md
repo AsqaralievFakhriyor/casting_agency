@@ -2,7 +2,7 @@
 ### This project was maded only for learning purposes!😉
 
 # Casting Agency Specifications
->[!]The Project was Deployed on Heroku
+[!]**NOTE:** The Project was Deployed on Heroku and Working I think 😅
 > https://casting_agencym.herokuapp.com 
 
 ## The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
@@ -80,6 +80,11 @@ pip install -r requirements.txt
 >This will install all of the required packages included in the requirements.txt
 >file.
 
+### Exporting ENV VARIABES form setup.sh file
+```bash
+source setup.sh
+```
+
 ### Local Database Setup
 > Once you create the database, open your terminal, navigate to the root folder, and run:
 ```bash
@@ -106,9 +111,7 @@ python -m test_ap.py
 > From within the root directory, first ensure you're working with your created
 venv. To run the server, execute the following:
 ```bash
-export FLASK_APP=project_directory
-export FLASK_DEBUG=true
-export FLASK_ENV=development
+
 flask run
 
 ```
