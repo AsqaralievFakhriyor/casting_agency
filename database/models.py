@@ -23,7 +23,7 @@ def setup_db(app):
 
 	try:
 		db.session.commit()
-		db.drop_all()
+		# db.drop_all()
 		db.create_all()
 	except Exception:
 		print(sys.exc_info())
