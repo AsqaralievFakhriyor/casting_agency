@@ -24,15 +24,13 @@ def setup_db(app):
 	try:
 		db.session.commit()
 		db.drop_all()
-		db.session.commit()
-
+		db.create_all()
 	except Exception:
 		print(sys.exc_info())
 		db.session.rollback()
 	finally:	
 		db.session.close()
-		
-	db.create_all()
+	
 
 """ Super Class for helper commands"""
 
