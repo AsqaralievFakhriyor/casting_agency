@@ -57,5 +57,3 @@ def insert_data():
 	title = 'Sarah Cameron',
 	release_data = '20.09.2.021')
 	movie4.insert()
-
-insert_data()
