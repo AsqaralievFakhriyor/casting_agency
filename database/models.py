@@ -3,23 +3,45 @@ from sqlalchemy import Column, Integer, String, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
-#geting database url
 
 
 db = SQLAlchemy()
 
 # setup function 
 def setup_db(app):
-	app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://ohimydbamxhozq:4874b53b0e2a0403128a5f871f3007ea9e90c04c5f0c7590b24ae6b60ef1cfb1@ec2-63-32-7-190.eu-west-1.compute.amazonaws.com:5432/d59sliljil0g1o'
-	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+	DATABASE_URL = os.getenv("DATABASE_URL")
+	DATABASE_TRACK_MODIFICATIONS = os.getenv("DATABASE_TRACK_MODIFICATIONS")
+	app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = DATABASE_TRACK_MODIFICATIONS
 	db.app = app
-	# grabing configurations from config.py
-	# app.config.from_object('config')
 	db.init_app(app)
+	db.session.commit()
+	db.drop_all()
 	db.create_all()
-	
+
+""" Super Class for helper commands"""
+
+class superClass(db.Model):
+    __abstract__ = True
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
 # actors 
-class Actors(db.Model):
+@dataclass
+class Actors(superClass):
+	id: int
+	name: String
+	age: int
+	gender: String
 
 	__tablename__ = 'actors'
 
@@ -33,16 +55,6 @@ class Actors(db.Model):
 		self.age = age
 		self.gender = gender
 
-	def insert(self):
-		db.session.add(self)
-		db.session.commit()
-
-	def update(self):
-		db.session.commit()
-
-	def delete(self):
-		db.session.delete(self)
-		db.session.commit()
 
 	def format(self):
 		return {
@@ -53,10 +65,14 @@ class Actors(db.Model):
 			}
 
 # movies
-
-class Movies(db.Model):
+@dataclass
+class Movies(superClass):
+	id: int
+	title: String
+	release_data: String
 
 	__tablename__ = 'movies'
+
 	id = Column(Integer, primary_key= True)
 	title = Column(String(120))
 	release_data = Column(String(120))
@@ -65,16 +81,6 @@ class Movies(db.Model):
 		self.title = title 
 		self.release_data = release_data
 
-	def insert(self):
-		db.session.add(self)
-		db.session.commit()
-
-	def update(self):
-		db.session.commit()
-
-	def delete(self):
-		db.session.delete(self)
-		db.session.commit()
 
 	def format(self):
 		return {

@@ -3,10 +3,13 @@ from app import create_app
 from database.models import setup_db, Movies, Actors
 import unittest
 import json
-from config import SQLALCHEMY_DATABASE_URI
 from flask_sqlalchemy import SQLAlchemy
 
-# i imported this function becouse git freezed when i runned this file   
+""" i imported this function there 
+becouse GIT freezed when i 
+runned this file when i use it 
+from another file """
+
 test_actor = Actors(
     name='Mark',
     age='32',
@@ -19,11 +22,14 @@ test_movie = Movies(
 class CapstoneTest(unittest.TestCase):
     def setUp(self):
 
-        # DB_PATH = os.getenv('DATABASE_URL_TEST')
+        DB_PATH = os.getenv('DATABASE_URL_TEST')
+        praducer_token = os.getenv("PRODUCER_TOKEN")
+        director_token = os.getenv("DIRECTOR_TOKEN")
+
         self.app = create_app()
         self.client = self.app.test_client
-        self.praducer_token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InpYdEhxdFY2S3B3UzhVMGFHRFRocCJ9.eyJpc3MiOiJodHRwczovL2ZheC51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE0NGEzZGQ3NTczNjQwMDZhMDllYzY1IiwiYXVkIjoiYWdlbmN5IiwiaWF0IjoxNjMyMDAyMjk2LCJleHAiOjE2MzIwMDk0OTYsImF6cCI6Imw0WnFqWjdCM3Z0cUprckEzZlU1d2J3M2NLWGd5SjhrIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiLCJwb3N0Om1vdmllcyJdfQ.0Bn51QBPXXoV58ltBEgiEd5eCkkfGwP5KqYyowVS94HIFbdxGFTaTJWvB6bAyyjHHcztLKOL25p0jcccBypXAQhwyBHSSCUXGoOFuv3uzZVe-5djqVXfabIjFgycyl2ncKNTMu979HmuSLpV470ms1hyovYUpHgUMJw-tjIiqO7yxGJ9tByJR0zTIkLcaczv-a_5Z4VkpK1jRMZxfbIBuZpHuULbhVOfrAjgH1ke9-O08qzQnf37YcuHKgUbcJor6OJ_9U-0k7JGQF1xo1oVJs_emoIZRJcbFvJOSTlP2dcJrchN4FHaMvx7tebQpPUM9eWzs6yL1KDY4axCmYKbOw'
-        self.director_token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InpYdEhxdFY2S3B3UzhVMGFHRFRocCJ9.eyJpc3MiOiJodHRwczovL2ZheC51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjE0NDgzZTYwMDU3NGYwMDcwMTI4MmMxIiwiYXVkIjoiYWdlbmN5IiwiaWF0IjoxNjMyMDAyMjg1LCJleHAiOjE2MzIwMDk0ODUsImF6cCI6Imw0WnFqWjdCM3Z0cUprckEzZlU1d2J3M2NLWGd5SjhrIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3JzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyJdfQ.vJtO5Ft_KoT3kITX1xk0AI5_-90Feztk2CLgkzFACyIX8NLqzToNuqIJbC5wJmbDCoYzf4tazwT6qg4xiQh4QNxtRd_tKRYypyTf8803aFYMbB8UWEdA-PwCCeyM_roPKzLY8dzyToUl2vB-68_MlWRz0RpxSNDhURxiO1rgrMavUoF2MmQR-jmS3eiQ4UuKZwZcmOmRMhTsAkxDjkKMi24pY3WC7bhUqC6accL-GKhsL2m5R-2j-0dmysAxwsYtWga46ytUgJkNU2T_5Uxgap8U5aVd5GOiiHYbqtQDTlWn-1SaY767B07DzFsNQTmedKIre7GK_sbCDfiBX_ER9A'
+        self.praducer_token = praducer_token
+        self.director_token = director_token
         self.test_actor_data = {"name": "Emerson", "age": 20, "gender":"male"}
         self.test_movie_data = {"title": "Avatar", "release_data":"20.09.2021"}
 
@@ -32,7 +38,6 @@ class CapstoneTest(unittest.TestCase):
         with self.app.app_context():
             self.db = SQLAlchemy()
             self.db.init_app(self.app)
-            # create all tables 
             self.db.create_all()
 
     def tearDown(self):
@@ -40,7 +45,7 @@ class CapstoneTest(unittest.TestCase):
         pass
 
 
-    # test for actors endpoints 
+    """ TEST for ACTOES endpoints """ 
     def test_get_actors(self):
         response = self.client().get('/actors')
         data = json.loads(response.data)
@@ -159,7 +164,9 @@ class CapstoneTest(unittest.TestCase):
         self.assertTrue(data['error'], 404)
         self.assertEqual(data['message'], 'not found')
 
-    # tests for movies endpoinds ############################################
+
+    """ TEST for MOVIES endpoints"""
+    
     def test_get_movies(self):
         response = self.client().get('/movies')
         data = json.loads(response.data)

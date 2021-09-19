@@ -1,9 +1,10 @@
 import os
+import sys
 from flask import (
-	Flask,  
-	jsonify, 
-	abort, 
-	redirect, 
+	Flask,
+	jsonify,
+	abort,
+	redirect,
 	url_for,
 	render_template)
 from flask import request
@@ -15,26 +16,10 @@ from helpers import insert_data
 
 # from authlib.integrations.flask_client import OAuth
 
+
 def create_app(test_config=None):
 
 	app = Flask(__name__)
-
-	# I tried to get token and via json to user, more info in log result route
-
-	# oauth = OAuth(app)
-
-	# auth0 = oauth.register(
-	# 'auth0',
-	# client_id='l4ZqjZ7B3vtqJkrA3fU5wbw3cKXgyJ8k',
-	# client_secret='6-uHXRbBjvFh1717iT0lX0MU0RXptwinW0I12g0pM82hn2L8OSc_-FS5BBLgcgwe',
-	# api_base_url='https://fax.us.auth0.com',
-	# access_token_url='https://fax.us.auth0.com/oauth/token',
-	# authorize_url='https://fax.us.auth0.com/authorize',
-	# client_kwargs={
-	# 	'scope': 'openid profile email',
-	# 	},
-	# )
-
 	setup_db(app)
 	CORS(app)
 	insert_data()
@@ -47,7 +32,7 @@ def create_app(test_config=None):
 
 		return response
 
-	# database data filter helper 
+	# database data filter helper
 
 	def actor_helper():
 		actors = Actors.query.all()
@@ -59,53 +44,56 @@ def create_app(test_config=None):
 		all_movies = [movie.format() for movie in movies]
 		return all_movies
 
-	#---------------------------------------------------------#	
-	# endpoints 
-	#---------------------------------------------------------#
+	"""Endpoints"""
+
 	@app.route('/')
 	def index():
-		return jsonify({
-			"Ok page is working!"
+		return jsonify({ 
+			"message":"Ok page is working!",
 			})
 
-	# GET endpoint for actors
+	""" GET endpoint for actors """
 	@app.route('/actors', methods = ['GET'])
 	def actors():
-		# @requires_auth('get:actors') ---> i reved this, couse i needed to create another email to make another role, but i didnt have eneugh time, i am sorry! 
 		try:
 			actors = actor_helper()
-		except:
+
+		except Exception:
+			print(sys.exc_info())
 			abort(404)
+			
 		finally:
 			return jsonify({
 				'success': True,
 				'actors': actors,
 				})
 
-	# GET endpoint for movies
+	""" GET endpoint for movies """
 	@app.route('/movies', methods = ['GET'])
-	def movies():# @requires_auth('get:movies') ---> i removed this becouse i needed another email to make another role, 
+	def movies():
 
 		try:
 			movies = movie_helper()
-		except:
+
+		except Exception:
+			print(sys.exc_info())
 			abort(404)
+			
 		finally:
 			return jsonify({
 				'success': True,
 				'movies': movies
 				})
 
-	#---------------------------------------------------------#
-	# POST endpoint for actors
+	""" POST endpoint for actors """
 	@app.route('/actors', methods = ['POST'])
 	@requires_auth('post:actors')
 	def post_actors(jwt):
 
 		body = request.get_json()
-		name = body.get('name', None)
-		age = body.get('age', None)
-		gender =  body.get('gender', None)
+		name = body.get('name')
+		age = body.get('age')
+		gender =  body.get('gender')
 
 
 		if (name is None) or (age is None) or (gender is None):
@@ -125,17 +113,19 @@ def create_app(test_config=None):
 				'status_code': 200,
 				'actor': actor
 				})
-		except:
-			abort(422)
 
-	# POST endpoint for movies
+		except Exception:
+			print(sys.exc_info())
+			abort(422)
+			
+	""" POST endpoint for movies """
 	@app.route('/movies', methods = ['POST'])
 	@requires_auth('post:movies')
 	def post_movies(jwt):
 
 		body = request.get_json()
-		title = body.get('title', None)
-		release_data = body.get('release_data', None)
+		title = body.get('title')
+		release_data = body.get('release_data')
 
 		if (title is None) or (release_data is None):
 			abort(400)
@@ -153,11 +143,12 @@ def create_app(test_config=None):
 				'status_code': 200,
 				'movie': movie
 				})
-		except:
-			abort(422)
 
-	#---------------------------------------------------------#
-	# PATCH endpoint for actors
+		except Exception:
+			print(sys.exc_info())
+			abort(422)
+			
+	""" PATCH endpoint for actors """
 	@app.route('/actors/<int:actor_id>', methods = ['PATCH'])
 	@requires_auth('patch:actors')
 	def patch_actors(jwt, actor_id):
@@ -166,9 +157,9 @@ def create_app(test_config=None):
 			abort(404)
 
 		body = request.get_json()
-		name = body.get('name', None)
-		age = body.get('age', None)
-		gender = body.get('gender', None)
+		name = body.get('name')
+		age = body.get('age')
+		gender = body.get('gender')
 
 		if (name is None) and (age is None) and (gender is None):
 			abort(400)
@@ -194,10 +185,13 @@ def create_app(test_config=None):
 				'status_code': 200,
 				'actor': actor
 				})
-		except:
-			abort(422)
 
-	# PATCH endpoint for movies
+		except Exception:
+			print(sys.exc_info())
+			abort(422)
+			
+
+	""" PATCH endpoint for movies """
 	@app.route('/movies/<int:movie_id>', methods = ['PATCH'])
 	@requires_auth('patch:movies')
 	def patch_movies(jwt, movie_id):
@@ -228,11 +222,11 @@ def create_app(test_config=None):
 				'status_code': 200,
 				'movie': movie
 				})
-		except:
+		except Exception:
+			print(sys.exc_info())
 			abort(422)
 
-	#---------------------------------------------------------#
-	# DELETE endpoint for actors
+	""" DELETE endpoint for actors """
 	@app.route('/actors/<int:actor_id>', methods = ['DELETE'])
 	@requires_auth('delete:actors')
 	def delte_actors(jwt, actor_id):
@@ -262,8 +256,7 @@ def create_app(test_config=None):
 		except:
 			abort(422)
 
-	# DELETE endpoint for movies
-
+	""" DELETE endpoint for movies """
 	@app.route('/movies/<int:movie_id>', methods = ['DELETE'])
 	@requires_auth('delete:movies')
 	def delte_movies(jwt, movie_id):
@@ -288,25 +281,7 @@ def create_app(test_config=None):
 		except:
 			abort(422)
 
-	# log results i tried it but i think it tooks a bit time so i will do it after getting sertifacate if i can :)
-	# @app.route('/log-result', methods=['GET', 'POST'])
-	# def log_result():
-	# 	if True:
-	# 		response = auth0.authorized_response()
-	# 		print(response.get("id_token"))
-	# 		return jsonify({
-	# 			'your authorization token': token,
-	# 			'success': True,
-	# 			'message': 'That token is only for developing purposes,'
-	# 			})
-	# 	else:
-	# 		raise AuthError({
- #            	'code':'authorization_header_missing',
- #            	'description': 'Authorization header expected'
- #            	}, 401)
-	#---------------------------------------------------------#
-	# ERROR hanlders
-
+	""" ERROR handlers """
 	@app.errorhandler(422)
 	def unprocessable(error):
 	    return jsonify({

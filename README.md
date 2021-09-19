@@ -2,6 +2,8 @@
 ### This project was maded only for learning purposes!😉
 
 # Casting Agency Specifications
+>[!]The Project was Deployed on Heroku
+> https://casting_agencym.herokuapp.com 
 
 ## The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
@@ -38,10 +40,13 @@
 ## Password for all users: 12345678Qwe
 
 # Authorization Link: 
-```language
-https://fax.us.auth0.com/authorize?audience=agency&response_type=token&client_id=l4ZqjZ7B3vtqJkrA3fU5wbw3cKXgyJ8k&redirect_uri=http://127.0.0.1:5000/log-result
-```
+>[!] Copy the `link` bellow end open with your borwser
 
+```language
+
+https://fax.us.auth0.com/authorize?audience=agency&response_type=token&client_id=l4ZqjZ7B3vtqJkrA3fU5wbw3cKXgyJ8k&redirect_uri=http://127.0.0.1:5000/log-result
+
+```
 
 ![auth_login](/screenshots/auth_login.jpg)
 
@@ -50,15 +55,68 @@ https://fax.us.auth0.com/authorize?audience=agency&response_type=token&client_id
 ![token_screen](/screenshots/token_screen.jpg)
 
 ### After geting acces token you have to save to [`setup.sh`](/setup.sh) or to heroku's evniroments
-### And you if you want you can cahange DATABASE_PATH, AUTH_AUDIANCE, AUTH_AUTHORIZE environments too  :)
+### And if you want you can change DATABASE_URL, AUTH0_AUDIANCE, AUTH0_DOMAIN etc, environments too 
 
-### TO upgrade DATABASE use:
-```eng
+## Installing Dependencies
+>[!] Python-3.9.5 (recommended)
+
+### Virtual Environment
+
+```bash
+
+cd project_directory
+pip install venv
+python -m venv venv
+source venv/Script/active
+
+```
+
+### PIP Dependecies
+> Once you have your **venv** setup and running, install dependencies by navigating
+> to the root directory and running:
+```bash
+pip install -r requirements.txt
+```
+>This will install all of the required packages included in the requirements.txt
+>file.
+
+### Local Database Setup
+> Once you create the database, open your terminal, navigate to the root folder, and run:
+```bash
+flask db init
+flask db migrate -m "Initial Migration"
+flask db upgrade
+```
+>[!] After running, don't forget modify 'SQLALCHEMY_DATABASE_URI' variable.
+
+### TO `upgrade` DATABASE on `HEROKU` use:
+```bash
 	python manage.py db init
 	python manage.py db migrate
 	python manage.py db upgrade
 ```
-> [!]There test_app.py file with unittest 
+## Local Testing
+> To test your local installation, run the following command from the root folder:
+```bash
+python -m test_ap.py
+```
+> If all tests pass, your local installation is set up correctly.
+
+## Runing the Server
+> From within the root directory, first ensure you're working with your created
+venv. To run the server, execute the following:
+```bash
+export FLASK_APP=project_directory
+export FLASK_DEBUG=true
+export FLASK_ENV=development
+flask run
+
+```
+> Setting the FLASK_ENV variable to development will detect file changes and
+> restart the server automatically.
+> Setting the FLASK_APP variable to agency directs Flask to use
+> the agency directory and the __init__.py file to find and load the
+> application.
 
 ### Project is ready to deploy HEROKU but you need to add POSGRESQL addon to your [`HEROKU`](https://heroku.com)  aplications
 
