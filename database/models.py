@@ -1,5 +1,10 @@
 import os
-from sqlalchemy import Column, Integer, String, create_engine
+import sys
+from sqlalchemy import (
+	Column, 
+	Integer, 
+	String, 
+	create_engine)
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -15,8 +20,18 @@ def setup_db(app):
 	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = DATABASE_TRACK_MODIFICATIONS
 	db.app = app
 	db.init_app(app)
-	db.session.commit()
-	db.drop_all()
+
+	try:
+		db.session.commit()
+		db.drop_all()
+		db.session.commit()
+
+	except Exception:
+		print(sys.exc_info())
+		db.session.rollback()
+	finally:	
+		db.session.close()
+		
 	db.create_all()
 
 """ Super Class for helper commands"""
