@@ -10,8 +10,9 @@ from jose import jwt
 from urllib.request import urlopen
 
 """ Set ENVIRONMENT VARIABLES in setup.sh file """
+ALGORITHMS_ENV = os.getenv("ALGORITHMS")
 AUTH0_DOMAIN = os.getenv("AUTH0_DOMAIN")
-ALGORITHMS = os.getenv["ALGORITHMS"]
+ALGORITHMS = [ALGORITHMS_ENV]
 API_AUDIENCE = os.getenv("API_AUDIENCE")
 
 class AuthError(Exception):
