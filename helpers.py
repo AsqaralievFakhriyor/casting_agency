@@ -3,6 +3,10 @@ from database.models import Actors, Movies, db
 # i love this helpers xD
 def insert_data():
 
+	db.session.commit()
+	db.drop_all()
+	db.create_all()
+
 	actor1 = Actors(
 	name='Sarah Cameron'
 	,age='23'
@@ -12,13 +16,13 @@ def insert_data():
 	actor2 = Actors(
 	name='Woody'
 	,age='12'
-	,gender='male')	
+	,gender='male')
 	actor2.insert()
 
 	actor3 = Actors(
 	name='Endy'
 	,age='20'
-	,gender='male')	
+	,gender='male')
 	actor3.insert()
 
 	actor4 = Actors(
@@ -51,5 +55,7 @@ def insert_data():
 
 	movie4 = Movies(
 	title = 'Sarah Cameron',
-	release_data = '20.09.2.021')		
+	release_data = '20.09.2.021')
 	movie4.insert()
+
+insert_data()

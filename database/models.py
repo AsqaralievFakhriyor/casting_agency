@@ -20,16 +20,6 @@ def setup_db(app):
 	app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = DATABASE_TRACK_MODIFICATIONS
 	db.app = app
 	db.init_app(app)
-
-	try:
-		db.session.commit()
-		# db.drop_all()
-		db.create_all()
-	except Exception:
-		print(sys.exc_info())
-		db.session.rollback()
-	finally:	
-		db.session.close()
 	
 
 """ Super Class for helper commands"""
