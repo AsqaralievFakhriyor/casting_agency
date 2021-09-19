@@ -123,17 +123,43 @@ flask run
 
 ### Project is ready to deploy HEROKU but you need to add POSGRESQL addon to your [`HEROKU`](https://heroku.com)  aplications
 
+# Reset Database Route
+
+* URL: `/actors/reset_database`
+
+Request using CURL:
+
+```bash
+curl curl --location --request GET \
+'https://casting-agencym.herokuapp.com/reset_database'
+```
+
+Request with python
+```python
+import requests
+
+url = "https://casting-agencym.herokuapp.com/reset_database"
+
+
+response = requests.request("GET", url)
+
+print(response.text)
+```
+# READ ME 😉
+### I made this becouse when i run app with auto db.drop_all() and db.create_all() commands they couse
+### some problems with tables(inserting, uptading etc), i wanted to use there require_auth(reset:database)
+### but project is not for production, it is only for learning purposes
+
 ##### 1. `GET` ACTORS
 
 * Methods: **GET**
-* URL: `/api/actors`
+* URL: `/actors`
 
 Sample Request using CURL:
 
 ```bash
 curl --location --request GET \
-'https://casting-agencym.herokuapp.com/actors' \
---header 'Authorization: Bearer <token>'
+'https://casting-agencym.herokuapp.com/actors'
 ```
 
 Sample Request using Python:
@@ -143,12 +169,8 @@ import requests
 
 url = "https://casting-agencym.herokuapp.com/actors"
 
-payload={}
-headers = {
-  'Authorization': 'Bearer <token>'
-}
 
-response = requests.request("GET", url, headers=headers, data=payload)
+response = requests.request("GET", url)
 
 print(response.text)
 ```
@@ -164,8 +186,7 @@ Sample Request using CURL:
 
 ```bash
 curl --location --request GET \
-'https://casting-agencym.herokuapp.com/movies' \
---header 'Authorization: Bearer <token>'
+'https://casting-agencym.herokuapp.com/movies'
 ```
 
 using Python:
@@ -175,12 +196,7 @@ import requests
 
 url = "https://casting-agencym.herokuapp.com/movies"
 
-payload={}
-headers = {
-  'Authorization': 'Bearer <token>'
-}
-
-response = requests.request("GET", url, headers=headers, data=payload)
+response = requests.request("GET", url)
 
 print(response.text)
 ```

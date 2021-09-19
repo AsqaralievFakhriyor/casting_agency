@@ -51,11 +51,20 @@ def create_app(test_config=None):
 			"message":"Ok page is working!",
 			})
 
-	@app.route('/reset_database')
+	"""
+	It is not a part of API i maded it to make testing easier
+	Actully i faced some problems with drop_all() and 
+	create_all() commands when i use them in app.py as a
+	auto reset database, i tried so many times , i deployed
+	this app for heoku for 41 times lol and its becouse of
+	this commands, if you have any answer pls reply me
+	my email: asqaraliyev01@gmail.com 
+	"""
+	@app.route('/reset_database', methods=['GET'])
 	def reset_database():
 		insert_data()
-
 		return redirect(url_for('index'))
+	"""---------------------------------------"""
 	""" GET endpoint for actors """
 	@app.route('/actors', methods = ['GET'])
 	def actors():
