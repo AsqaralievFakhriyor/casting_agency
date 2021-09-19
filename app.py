@@ -51,6 +51,11 @@ def create_app(test_config=None):
 			"message":"Ok page is working!",
 			})
 
+	@app.route('/reset_database')
+	def reset_database():
+		insert_data()
+
+		return redirect(url_for('index'))
 	""" GET endpoint for actors """
 	@app.route('/actors', methods = ['GET'])
 	def actors():
